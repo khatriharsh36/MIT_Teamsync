@@ -17,7 +17,7 @@ const authMiddleware = async (req, res, next) => {
     }
     
     req.userId = decoded.userId;
-    req.user = user;
+    req.user = { userId: decoded.userId, role: user.role, ...user.toObject() };
     next();
   } catch (error) {
     res.status(401).json({ message: 'Token is not valid' });

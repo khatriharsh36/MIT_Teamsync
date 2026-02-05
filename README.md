@@ -125,6 +125,7 @@ A modern, dark-themed professional collaboration platform specifically designed 
 - `npm run dev` - Start backend server with nodemon
 - `npm start` - Start backend server
 - `npm run seed:admin` - Create default admin user
+- `npm run seed:student` - Create default student user
 
 ## 🎨 Design System
 
@@ -217,6 +218,7 @@ A modern, dark-themed professional collaboration platform specifically designed 
 - `POST /api/auth/login` - Login user
 
 ### User Management
+- `GET /api/profile/me` - Get current user profile (For Dashboard)
 - `GET /api/profile/:id` - Get user profile (Protected)
 - `GET /api/users` - Get all users
 - `PUT /api/profile/:id` - Update user profile
@@ -228,23 +230,58 @@ A modern, dark-themed professional collaboration platform specifically designed 
 - `PATCH /api/admin/users/:id/role` - Update user role (Admin)
 - `GET /api/admin/analytics` - Get platform analytics (Admin)
 
+### Events (NEW)
+- `GET /api/events` - Get all events
+- `GET /api/events/:id` - Get single event
+- `POST /api/events` - Create event (Admin)
+- `PUT /api/events/:id` - Update event (Admin)
+- `POST /api/events/:id/register` - Register for event
+- `DELETE /api/events/:id/register` - Unregister from event
+
+### Permission Requests (NEW)
+- `POST /api/permissions` - Create permission request
+- `GET /api/permissions/my-requests` - Get own requests
+- `GET /api/permissions` - Get all requests (Admin)
+- `PATCH /api/permissions/:id` - Approve/reject request (Admin)
+- `DELETE /api/permissions/:id` - Delete request (Admin)
+
+### Student Profiles (NEW)
+- `GET /api/profiles/me` - Get own profile
+- `PUT /api/profiles/me` - Update own profile
+- `GET /api/profiles/:userId` - Get user profile
+- `GET /api/profiles/search/filter` - Search profiles
+
+### Real-time Queries (NEW)
+- `POST /api/queries` - Create query (Student)
+- `GET /api/queries/my-queries` - Get own queries (Student)
+- `GET /api/queries` - Get all queries (Admin)
+- `PATCH /api/queries/:id` - Update query status (Admin)
+- `DELETE /api/queries/:id` - Delete query (Admin)
+
 ## 🗂️ Project Structure
 
 ```
 Minorproject(teamsync)/
 ├── server/                    # Backend
 │   ├── models/
-│   │   └── User.js           # User schema with role field
+│   │   ├── User.js           # User schema with role field
+│   │   ├── Event.js          # Event schema (NEW)
+│   │   ├── StudentProfile.js # Student profile schema (NEW)
+│   │   └── PermissionRequest.js # Permission request schema (NEW)
 │   ├── routes/
 │   │   ├── authRoutes.js     # Authentication endpoints
 │   │   ├── userRoutes.js     # User management endpoints
-│   │   └── adminRoutes.js    # Admin-only endpoints
+│   │   ├── adminRoutes.js    # Admin-only endpoints
+│   │   ├── eventRoutes.js    # Event management (NEW)
+│   │   ├── permissionRoutes.js # Permission requests (NEW)
+│   │   └── profileRoutes.js  # Student profiles (NEW)
 │   ├── middleware/
 │   │   └── auth.js           # JWT auth & admin check middleware
 │   ├── .env                  # Environment variables
 │   ├── server.js             # Express server setup
 │   ├── seedAdmin.js          # Admin user seed script
 │   ├── API_DOCS.md           # API documentation
+│   ├── API_ENDPOINTS.md      # New endpoints documentation (NEW)
 │   └── package.json
 ├── src/
 │   ├── pages/
@@ -272,6 +309,7 @@ Minorproject(teamsync)/
 cd server
 npm install
 npm run seed:admin
+npm run seed:student
 npm run dev
 
 # Terminal 2 - Frontend
@@ -283,6 +321,12 @@ npm run dev
 - **Email**: admin@mitaoe.ac.in
 - **Password**: Admin@123
 - **Role**: admin
+
+### Default Student Credentials
+- **Email**: student@mitaoe.ac.in
+- **Password**: Student@123
+- **Name**: Harsh Khatri
+- **Role**: student
 
 ### Testing the Application
 
@@ -342,13 +386,24 @@ export const API_URL = 'http://localhost:5000/api'
 
 ## 📝 Recent Changes
 
-### Backend Changes
+### Backend Changes (v2.1.0)
 - ✅ Added `role` field to User model (student/admin)
 - ✅ Updated authentication to include role in JWT token
 - ✅ Created admin-only routes with role-based middleware
 - ✅ Added user management endpoints (CRUD operations)
 - ✅ Implemented analytics endpoint for admin dashboard
 - ✅ Created seed script for initial admin user
+- ✅ **NEW: Event model with full CRUD operations**
+- ✅ **NEW: StudentProfile model for extended user data**
+- ✅ **NEW: PermissionRequest model for access control**
+- ✅ **NEW: Query model for real-time student queries**
+- ✅ **NEW: 20 API endpoints for events, profiles, permissions, and queries**
+- ✅ **NEW: Socket.IO integration for real-time updates**
+- ✅ **NEW: Real-time query system (student → admin)**
+- ✅ **NEW: Default student account for testing**
+- ✅ **NEW: Event registration and management system**
+- ✅ **NEW: Permission request workflow for students**
+- ✅ **NEW: Advanced profile search and filtering**
 
 ### Frontend Changes
 - ✅ Connected LoginPage to backend API
@@ -392,4 +447,21 @@ For issues or questions:
 
 **Built with ❤️ for MITAOE students by the TeamSync development team**
 
-**Version**: 2.0.0 (With Role-Based Authentication)
+**Version**: 2.2.0 (With Real-time Query System)
+
+### What's New in v2.2.0
+- 🚀 Real-time Query System with Socket.IO
+- 💬 Student-to-Admin instant messaging
+- 🔔 Real-time notifications for queries and responses
+- 👥 Default student account for testing
+- ⚡ WebSocket integration for live updates
+
+### What's in v2.1.0
+- 🎯 Event Management System (6 endpoints)
+- 🔐 Permission Request Workflow (5 endpoints)
+- 👤 Enhanced Student Profiles (4 endpoints)
+- 📊 20 Total API Endpoints
+- 🗄️ 4 Database Models
+- 📚 Comprehensive API Documentation
+
+**See:** `server/REALTIME_QUERIES.md` for real-time features

@@ -73,12 +73,7 @@ const Dashboard = () => {
     { name: "Aadesh Khande", expertise: "UI/UX Designer", rating: 4.7, projects: 8 }
   ]
 
-  const domains = [
-    { name: "Development", icon: Code, color: "from-electric-blue to-neon-teal" },
-    { name: "Design", icon: Palette, color: "from-neon-purple to-electric-blue" },
-    { name: "Marketing", icon: Megaphone, color: "from-neon-teal to-neon-purple" },
-    { name: "Data Science", icon: BarChart3, color: "from-electric-blue to-neon-purple" }
-  ]
+
 
   return (
     <div className="min-h-screen bg-dark flex">
@@ -515,21 +510,7 @@ const Dashboard = () => {
                 ))}
               </div>
 
-              {/* Domain Categories */}
-              <h3 className="text-xl font-space font-bold mt-8 mb-4">Explore Domains</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {domains.map((domain, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`bg-gradient-to-r ${domain.color} p-4 rounded-xl cursor-pointer opacity-90 hover:opacity-100 transition-opacity`}
-                  >
-                    <domain.icon size={24} className="mb-2" />
-                    <div className="text-sm font-medium">{domain.name}</div>
-                  </motion.div>
-                ))}
-              </div>
+
             </div>
           </div>
 
